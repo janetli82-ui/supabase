@@ -13,10 +13,10 @@ import ErrorMessages from "../ErrorMessages"
 
 export default function ReplyCommentButton({ postId, parentId, slug, }:{postId:string, parentId:string, slug:string}) {
 
-  const [reply, setReply] = useState<string | null>(null)
-
+  const [reply, setReply] = useState(false)
+  
   const handleClick = () => {
-    setReply(reply === parentId ? null : parentId)
+    setReply(!reply)
   }
   const {register, handleSubmit, reset, formState: {errors}} = useForm({
       resolver:zodResolver(replyCommentSchema),
@@ -29,7 +29,7 @@ export default function ReplyCommentButton({ postId, parentId, slug, }:{postId:s
     })
   const { mutate } = useMutation({
     mutationFn: ReplyCommentPost,
-    onSuccess: () => reset()                 
+    onSuccess: () => {reset(), setReply(false)}             
   })  
   return (
     <div className="flex flex-col">
