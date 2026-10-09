@@ -1,5 +1,5 @@
 import DeleteButton from "@/component/Button/deletePostButton";
-import { getCategoryBySlug, getPostsByCategory } from "@/lib/supabase/queries";
+import { getCategory, getPostsByCategory } from "@/lib/supabase/queries";
 import { createClient } from "@/lib/supabase/serverClient";
 import { slugify } from "@/lib/supabase/slugify";
 import Link from "next/link";
@@ -14,14 +14,14 @@ const CategoriesPage = async ({
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  const { data } = await getCategoryBySlug(slug, supabase);
-  if (!data) return <p>Category not found</p>;
-  const { data: posts } = await getPostsByCategory(data.id, supabase);
+  const { data: category } = await getCategory(slug, supabase);
+  if (!category) return <p>Category not found</p>;
+  const { data: posts } = await getPostsByCategory(category.id, supabase);
 
   return (
     <div className="border border-border rounded-2xl mb-4 p-4 bg-white shadow-sm mt-3 grow">
       <div className="flex flex-col items-center m-4">
-        <h3 className="text-2xl text-center p-3">{data.name}</h3>
+        <h3 className="text-2xl text-center p-3">{category.name}</h3>
         {posts?.map((post) => (
           <Link
             href={`/${slugify(post.title!)}`}

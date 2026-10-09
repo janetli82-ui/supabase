@@ -7,11 +7,12 @@ import { replyCommentSchema } from "../../../actions/schemas"
 import { ReplyCommentPost } from "../../../actions/reply-post-action"
 import { useMutation } from "@tanstack/react-query"
 import ErrorMessages from "../ErrorMessages"
+import { FaRegCommentDots } from "react-icons/fa6";
+import { IoSendOutline } from "react-icons/io5";
 
 
 
-
-export default function ReplyCommentButton({ postId, parentId, slug, }:{postId:string, parentId:string, slug:string}) {
+export default function ReplyCommentButton({ postId, parentId, slug }:{postId:string, parentId:string, slug:string}) {
 
   const [reply, setReply] = useState(false)
   
@@ -33,8 +34,8 @@ export default function ReplyCommentButton({ postId, parentId, slug, }:{postId:s
   })  
   return (
     <div className="flex flex-col">
-      <button onClick={handleClick} className="rounded-xl p-2 text-china-red border border-china-red hover:bg-china-red hover:text-white">
-        Reply
+      <button onClick={handleClick} className="cursor-pointer">
+        <FaRegCommentDots />
       </button>
       {reply && (
         <form onSubmit={handleSubmit(values => mutate(values))} className=" flex flex-col mt-4">
@@ -42,7 +43,7 @@ export default function ReplyCommentButton({ postId, parentId, slug, }:{postId:s
           <textarea {...register("content")} placeholder="Write a comment..." />
           {errors.content && <ErrorMessages error={errors.content.message!} />}
 
-          <button className="cursor-pointer bg-linear-to-r from-china-red to-china-red-dark text-white font-bold py-2 px-4 rounded-md mt-4 hover:bg-china-red hover:to-china-red-dark transition ease-in-out duration-150">Post</button>
+          <button className="cursor-pointer mt-1"><IoSendOutline /></button>
         </form>
       )}
     </div>

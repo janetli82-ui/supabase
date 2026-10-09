@@ -8,8 +8,9 @@ import { useMutation } from "@tanstack/react-query"
 import { CreatePost } from "../../../../actions/create-post-action"
 import { useState } from "react"
 
-const CreatePostForm = ({categories} :{ categories: any[]}) => {
+const CreatePostForm = ({ categories } :{ categories: any[]}) => {
   const [files, setFiles] = useState<File[]>([])
+
   const {register, handleSubmit, formState: {errors}} = useForm({
     resolver:zodResolver(postSchema)
   })

@@ -10,7 +10,7 @@ const CommentItem = ({ comments, comment, user, postdata, slug, depth }:{comment
       <p className="text-right text-sm text-muted">
         created by {comment.Users.username}
       </p>
-      <div className="flex items-center gap-2 mt-2 mb-2">
+      <div className="flex items-start gap-2 mt-2 mb-2">
         {user &&
           (user.id === comment.user_id ||
             user.id === postdata!.author.id) && (

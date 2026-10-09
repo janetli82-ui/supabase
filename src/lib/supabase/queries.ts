@@ -14,7 +14,7 @@ export const getSinglePost = async (slug:string, supabase:ReturnType<typeof crea
                        .single()
 }
 
-export const getCategoryBySlug = async (slug:string, supabase:ReturnType<typeof createClient>) => {
+export const getCategory = async (slug:string, supabase:ReturnType<typeof createClient>) => {
   return await supabase.from('Categories')
                        .select('id, name, slug')
                        .eq("slug", slug)
@@ -48,7 +48,7 @@ export type SinglePostType = QueryData<ReturnType<typeof getSinglePost>>
 
 export type SearchPostsType = QueryData<ReturnType<typeof searchPosts>>
 
-export type CategoryBySlugType = QueryData<ReturnType<typeof getCategoryBySlug>>
+export type CategoryType = QueryData<ReturnType<typeof getCategory>>
 
 export type PostsByCategoryType = QueryData<ReturnType<typeof getPostsByCategory>>
 
