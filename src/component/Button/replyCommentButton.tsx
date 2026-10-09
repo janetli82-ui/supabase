@@ -1,0 +1,50 @@
+"use client"
+
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { replyCommentSchema } from "../../../actions/schemas"
+import { ReplyCommentPost } from "../../../actions/reply-post-action"
+import { useMutation } from "@tanstack/react-query"
+import ErrorMessages from "../ErrorMessages"
+
+
+
+
+export default function ReplyCommentButton({ postId, parentId, slug, }:{postId:string, parentId:string, slug:string}) {
+
+  const [reply, setReply] = useState<string | null>(null)
+
+  const handleClick = () => {
+    setReply(reply === parentId ? null : parentId)
+  }
+  const {register, handleSubmit, reset, formState: {errors}} = useForm({
+      resolver:zodResolver(replyCommentSchema),
+      defaultValues: { 
+        content: "", 
+        post_id: postId, 
+        parent_id: parentId,
+        slug: slug,
+      },
+    })
+  const { mutate } = useMutation({
+    mutationFn: ReplyCommentPost,
+    onSuccess: () => reset()                 
+  })  
+  return (
+    <div className="flex flex-col">
+      <button onClick={handleClick} className="rounded-xl p-2 text-china-red border border-china-red hover:bg-china-red hover:text-white">
+        Reply
+      </button>
+      {reply && (
+        <form onSubmit={handleSubmit(values => mutate(values))} className=" flex flex-col mt-4">
+          <label htmlFor="content">Reply a comment</label>
+          <textarea {...register("content")} placeholder="Write a comment..." />
+          {errors.content && <ErrorMessages error={errors.content.message!} />}
+
+          <button className="cursor-pointer bg-linear-to-r from-china-red to-china-red-dark text-white font-bold py-2 px-4 rounded-md mt-4 hover:bg-china-red hover:to-china-red-dark transition ease-in-out duration-150">Post</button>
+        </form>
+      )}
+    </div>
+  )
+}
