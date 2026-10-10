@@ -15,7 +15,7 @@ export const postSchema = z.object({
   title:z.string().min(6, "Your title must be at least 6 characters long!"),
   content: z.string().min(1, "Content is required"),
   category_id: z.uuid("Please select a category"),
-  img_url: z.array(z.instanceof(File)).optional(),
+  img_url: z.array(z.file()).optional(),
 })
 
 export const commentSchema = z.object({

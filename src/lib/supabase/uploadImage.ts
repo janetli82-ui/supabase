@@ -10,8 +10,8 @@ export const UploadImage = async (image:File) => {
    const {data, error} = await supabase.storage.from("post-images").upload(uniqueImageName, image)
    if(error) throw error
    
-   const {data: {publicUrl}} = await supabase.storage.from("post-images").getPublicUrl(data.path)
+   const { data: {publicUrl} } = await supabase.storage.from("post-images").getPublicUrl(data.path)
 
    return publicUrl
 
-  }
+}

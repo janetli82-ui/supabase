@@ -14,7 +14,7 @@ const HomePosts = ({ posts }: { posts: HomePostType }) => {
           className="block border border-border rounded-2xl m-4 p-4 bg-white shadow-sm"
         >
           <h3 className="text-2xl font-bold">{post.title}</h3>
-          <div className="flex justify-start items-center">
+          <div className="flex justify-start items-center gap-2">
             {post.img_url?.map((img, index) => (
               <div key={index} >
                <img src={img} alt={img} className="mt-3 w-20 h-fit"/>
