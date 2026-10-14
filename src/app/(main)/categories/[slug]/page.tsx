@@ -30,7 +30,7 @@ const CategoriesPage = async ({
           >
             <h4 className="font-bold">{post.title}</h4>
             <p className="text-muted text-sm mt-2">{post.content}</p>
-            <div className="flex justify-start items-center">
+            <div className="flex justify-start items-center gap-3">
               {post.img_url?.map((img, index) => (
                 <div key={index} className="mt-3">
                   <img src={img} alt={img} width={80} />
